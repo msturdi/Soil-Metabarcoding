@@ -5,14 +5,14 @@ library(readxl)
 
 set.seed(19980609)
 
-shared <- read_tsv("FILE",
+shared <- read_tsv("FILE.subsample.shared",
                    col_types = cols(Group = col_character(),
                                     .default = col_double())) %>%
   rename_all(tolower) %>%
   select(group, starts_with("otu")) %>%
   pivot_longer(-group, names_to="otu", values_to="count")
 
-taxonomy <- read_tsv(file="FILE") %>%
+taxonomy <- read_tsv(file="FILE.taxonomy") %>%
   rename_all(tolower) %>%
   select (otu, taxonomy) %>%
   mutate(otu = tolower(otu)) %>%
@@ -28,7 +28,7 @@ taxonomy <- read_tsv(file="FILE") %>%
   separate(taxonomy, into=c("kingdom", "phylum", "class", "order", "family", "genus"), sep=";") %>%
   select(otu, genus) #genus can be swapped for classification of choice
 
-metadata <- read_excel("FILE") %>%
+metadata <- read_excel("FILE.xlsx") %>%
   rename(group = sample)
 
 composite <- inner_join(shared, taxonomy, by="otu") %>%
