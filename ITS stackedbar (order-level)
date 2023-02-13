@@ -3,14 +3,14 @@ library(readxl)
 library(RColorBrewer)
 library(ggtext)
 
-metadata <- read_excel("FILE")
+metadata <- read_excel("FILE.xlsx")
 
-otu_counts <- read_tsv("FILE") %>%
+otu_counts <- read_tsv("FILE.subsample.shared") %>%
   select(Group, starts_with("Otu")) %>%
   rename(sample = Group) %>%
   pivot_longer(-sample, names_to="otu", values_to = "count")
 
-taxonomy <- read_tsv(file="FILE") %>%
+taxonomy <- read_tsv(file="FILE.taxonomy") %>%
   rename_all(tolower) %>%
   mutate(taxonomy=str_replace_all(string=taxonomy, pattern="\\(\\d*\\)", replacement="")) %>%
   mutate(taxonomy=str_replace_all(string=taxonomy, pattern=";$", replacement="")) %>%
