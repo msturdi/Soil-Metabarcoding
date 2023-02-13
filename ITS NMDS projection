@@ -2,7 +2,7 @@ library(tidyverse)
 library(readxl)
 library(RColorBrewer)
 
-metadata <- read_excel(path="FILE")
+metadata <- read_excel(path="FILE.xlsx")
 
 nmds <- read_tsv(file="FILE.braycurtis.nmds.axes")
 
