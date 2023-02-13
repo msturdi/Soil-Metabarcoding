@@ -3,7 +3,7 @@ library(readxl)
 library(glue)
 library(ggtext)
 
-taxonomy <- read_tsv(file="FILE") %>%
+taxonomy <- read_tsv(file="FILE.taxonomy") %>%
   select("OTU", "Taxonomy") %>%
   rename_all(tolower) %>%
   mutate(taxonomy=str_replace_all(string=taxonomy, pattern="\\(\\d*\\)", replacement="")) %>%
@@ -23,9 +23,9 @@ taxonomy <- read_tsv(file="FILE") %>%
          taxon = glue("{genus}<br>({pretty_otu})")) %>%
   select(otu, taxon)
 
-metadata <- read_excel("FILE")
+metadata <- read_excel("FILE.xlsx")
 
-shared_file <- read_tsv("FILE")
+shared_file <- read_tsv("FILE.subsample.shared")
 
 shared_design <- inner_join(shared_file, metadata, by=c("Group"="sample"))
 
